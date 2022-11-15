@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const Card = ({children}) => {
+const Card = ({children, newStyles}) => {
     return (
-        <View style = {styles.inputContainer}>
+        <View style = {{...styles.inputContainer, ...newStyles}}>
             {children}
         </View>
     )
@@ -13,7 +13,8 @@ export default Card
 
 const styles = StyleSheet.create({
     inputContainer: {
-        width: 300,
+        width: "80%",
+        maxWidth: 400,
         padding: 20,
         alignItems: "center",
         shadowColor: "black",

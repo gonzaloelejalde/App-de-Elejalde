@@ -23,6 +23,6 @@ const styles = StyleSheet.create({
         borderBottomColor: "black",
         borderBottomWidth: 2,
         marginVertical: 10,
-        width: 50
+        width: "20%"
     }
 })
