@@ -2,20 +2,20 @@ import { StyleSheet, Text, View, Button } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Card from '../components/Card'
 
-const GameScreen = () => {
+const GameScreen = ({handleResult}) => {
     const [currentGuess, setCurrentGuess] = useState()
 
     useEffect(() => {
         setCurrentGuess(Math.floor(Math.random() * (100 - 1) + 1))
-    })
+    }, [])
 
     return (
         <View style = {styles.container}>
-            <Text>La suposicion del oponente</Text>
+            <Text>Suposición</Text>
             <Text>{currentGuess}</Text>
             <Card newStyles={styles.buttonContainer}>
-                <Button title = "Menor"/>
-                <Button title = "Mayor"/>
+                <Button title = "Menor" onPress={() => handleResult("lower", currentGuess)}/>
+                <Button title = "Mayor" onPress={() => handleResult("greater", currentGuess)}/>
             </Card>
         </View>
     )

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Pressable, TouchableWithoutFeedback, Keyboard, Button } from 'react-native'
+import { StyleSheet, Text, View, Pressable, TouchableWithoutFeedback, Keyboard, Button, KeyboardAvoidingView, Platform, ScrollView, SafeAreaView } from 'react-native'
 import React, { useState } from 'react'
 import Card from '../components/Card'
 import colors from '../constants/Colors'
@@ -27,29 +27,35 @@ const StartGameScreen = ({onStartGame}) => {
         setValue(text.replace(/[^0-9]/g, ""))
     }
     return (
-        <TouchableWithoutFeedback onPress = {() => Keyboard.dismiss()}>
-        <View style = {styles.screen}>
-            <Card>
-                <Text>Elije un número</Text>
-                <Input value = {value} onChangeText = {handleInput}/>
-                <View style = {styles.buttonContainer}>
-                    <Pressable style = {styles.cleanButton} onPress = {handleResetInput}>
-                        <Text style = {{color: "white"}}>Limpiar</Text>
-                    </Pressable>
-                    <Pressable style = {{...styles.cleanButton, ...styles.confirmButton}} onPress = {handleConfirmation}>
-                        <Text style = {{color: "white"}}>Confirmar</Text>
-                    </Pressable>
-                </View>
-            </Card>
-            {confirmed && (
-            <Card newStyles = {{marginTop: 50, width: 150}}>
-                <Text>Tu número:</Text>
-                <Text>{selectedNumber}</Text>
-                <Button title = "Empezar juego" onPress = {() => onStartGame(selectedNumber)}/>
-            </Card>
-            )}
-        </View>
-        </TouchableWithoutFeedback>
+        <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "position" : "padding"}>
+            <ScrollView>
+                <SafeAreaView>
+                    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+                        <View style={styles.screen}>
+                            <Card>
+                                <Text>Elije un número</Text>
+                                <Input value={value} onChangeText={handleInput} />
+                                <View style={styles.buttonContainer}>
+                                    <Pressable style={styles.cleanButton} onPress={handleResetInput}>
+                                        <Text style={{ color: "white" }}>Limpiar</Text>
+                                    </Pressable>
+                                    <Pressable style={{ ...styles.cleanButton, ...styles.confirmButton }} onPress={handleConfirmation}>
+                                        <Text style={{ color: "white" }}>Confirmar</Text>
+                                    </Pressable>
+                                </View>
+                            </Card>
+                            {confirmed && (
+                                <Card newStyles={{ marginTop: 50, width: "50%" }}>
+                                    <Text>Tu número:</Text>
+                                    <Text>{selectedNumber}</Text>
+                                    <Button title="Empezar juego" onPress={() => onStartGame(selectedNumber)} />
+                                </Card>
+                            )}
+                        </View>
+                    </TouchableWithoutFeedback>
+                </SafeAreaView>
+            </ScrollView>
+        </KeyboardAvoidingView>
     )
 }
 
